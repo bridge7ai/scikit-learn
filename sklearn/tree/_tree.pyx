@@ -93,7 +93,8 @@ cdef class TreeBuilder:
 
     cpdef build(self, Tree tree, object X, np.ndarray y,
                 np.ndarray sample_weight=None,
-                np.ndarray X_idx_sorted=None):
+                np.ndarray X_idx_sorted=None,
+                np.ndarray data_labels=None):
         """Build a decision tree from the training set (X, y)."""
         pass
 
@@ -145,7 +146,8 @@ cdef class DepthFirstTreeBuilder(TreeBuilder):
 
     cpdef build(self, Tree tree, object X, np.ndarray y,
                 np.ndarray sample_weight=None,
-                np.ndarray X_idx_sorted=None):
+                np.ndarray X_idx_sorted=None,
+                np.ndarray data_labels=None):
         """Build a decision tree from the training set (X, y)."""
 
         # check input
@@ -231,6 +233,14 @@ cdef class DepthFirstTreeBuilder(TreeBuilder):
 
                 is_leaf = (is_leaf or
                            (impurity <= min_impurity_split))
+                
+                with gil:
+                    if not is_leaf:
+                        is_synth_data = np.min(data_labels[start:end])
+                        if is_synth_data:
+                            # Set is_leaf to True and don't split
+                            is_leaf = True
+                            print("\nNot splitting on synth data")
 
                 if not is_leaf:
                     splitter.node_split(impurity, &split, &n_constant_features)

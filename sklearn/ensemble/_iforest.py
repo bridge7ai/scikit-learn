@@ -218,7 +218,7 @@ class IsolationForest(OutlierMixin, BaseBagging):
         # copies.
         return _joblib_parallel_args(prefer='threads')
 
-    def fit(self, X, y=None, sample_weight=None):
+    def fit(self, X, y=None, sample_weight=None, data_labels=None):
         """
         Fit estimator.
 
@@ -292,7 +292,8 @@ class IsolationForest(OutlierMixin, BaseBagging):
         max_depth = int(np.ceil(np.log2(max(max_samples, 2))))
         super()._fit(X, y, max_samples,
                      max_depth=max_depth,
-                     sample_weight=sample_weight)
+                     sample_weight=sample_weight,
+                     data_labels=data_labels)
 
         if self.contamination == "auto":
             # 0.5 plays a special role as described in the original paper.

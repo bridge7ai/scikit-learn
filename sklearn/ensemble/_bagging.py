@@ -60,7 +60,7 @@ def _generate_bagging_indices(random_state, bootstrap_features,
 
 
 def _parallel_build_estimators(n_estimators, ensemble, X, y, sample_weight,
-                               seeds, total_n_estimators, verbose):
+                               data_labels, seeds, total_n_estimators, verbose):
     """Private function used to build a batch of estimators within a job."""
     # Retrieve settings
     n_samples, n_features = X.shape
@@ -107,7 +107,7 @@ def _parallel_build_estimators(n_estimators, ensemble, X, y, sample_weight,
                 not_indices_mask = ~indices_to_mask(indices, n_samples)
                 curr_sample_weight[not_indices_mask] = 0
 
-            estimator.fit(X[:, features], y, sample_weight=curr_sample_weight)
+            estimator.fit(X[:, features], y, sample_weight=curr_sample_weight, data_labels=data_labels)
 
         else:
             estimator.fit((X[indices])[:, features], y[indices])
@@ -245,7 +245,7 @@ class BaseBagging(BaseEnsemble, metaclass=ABCMeta):
     def _parallel_args(self):
         return {}
 
-    def _fit(self, X, y, max_samples=None, max_depth=None, sample_weight=None):
+    def _fit(self, X, y, max_samples=None, max_depth=None, sample_weight=None, data_labels=None):
         """Build a Bagging ensemble of estimators from the training
            set (X, y).
 
@@ -374,6 +374,7 @@ class BaseBagging(BaseEnsemble, metaclass=ABCMeta):
                 X,
                 y,
                 sample_weight,
+                data_labels,
                 seeds[starts[i]:starts[i + 1]],
                 total_n_estimators,
                 verbose=self.verbose)
