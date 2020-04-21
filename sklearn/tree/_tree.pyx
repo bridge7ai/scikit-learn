@@ -325,7 +325,8 @@ cdef class BestFirstTreeBuilder(TreeBuilder):
 
     cpdef build(self, Tree tree, object X, np.ndarray y,
                 np.ndarray sample_weight=None,
-                np.ndarray X_idx_sorted=None):
+                np.ndarray X_idx_sorted=None,
+                np.ndarray data_labels=None):
         """Build a decision tree from the training set (X, y)."""
 
         # check input
