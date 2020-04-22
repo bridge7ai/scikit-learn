@@ -34,12 +34,12 @@ with open('README.rst') as f:
 MAINTAINER = 'Andreas Mueller'
 MAINTAINER_EMAIL = 'amueller@ais.uni-bonn.de'
 URL = 'http://scikit-learn.org'
-DOWNLOAD_URL = 'https://pypi.org/project/scikit-learn/#files'
+DOWNLOAD_URL = 'https://github.com/bridge7ai/scikit-learn#files'
 LICENSE = 'new BSD'
 PROJECT_URLS = {
     'Bug Tracker': 'https://github.com/scikit-learn/scikit-learn/issues',
     'Documentation': 'https://scikit-learn.org/stable/documentation.html',
-    'Source Code': 'https://github.com/scikit-learn/scikit-learn'
+    'Source Code': 'https://github.com/bridge7ai/scikit-learn'
 }
 
 # We can actually import a restricted version of sklearn that
