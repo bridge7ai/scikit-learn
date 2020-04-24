@@ -240,7 +240,7 @@ cdef class DepthFirstTreeBuilder(TreeBuilder):
                         if is_synth_data:
                             # Set is_leaf to True and don't split
                             is_leaf = True
-                            print("\nNot splitting on synth data")
+                            # print("\nNot splitting on synth data")
 
                 if not is_leaf:
                     splitter.node_split(impurity, &split, &n_constant_features)
